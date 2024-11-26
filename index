@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinks R Us HR Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Modal visibility controlled by targeting */
+        #employeeModal {
+            display: none;
+        }
+
+        #employeeModal.active {
+            display: flex;
+        }
+
+        /* background enhancements */
+        #loginPage {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('https://example.com/background-image.jpg') center/cover no-repeat;
+        }
+
+        /* Gradient background for employee list page */
+        #employeeListPage {
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+        }
+
+        /* Add animation for the login background */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #employeeListPage {
+            animation: gradientAnimation 5s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        /* Add a soft blur effect */
+        .blur-bg {
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Login Page -->
+    <div id="loginPage" class="h-screen flex items-center justify-center">
+        <div class="bg-white shadow-md rounded-lg p-8 max-w-sm w-full">
+            <h1 class="text-3xl font-semibold text-center mb-6 text-indigo-600">Login to Sinkssys</h1>
+            <form id="loginForm" onsubmit="return loginRedirect(event)">
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 font-medium">Username</label>
+                    <input type="text" id="username" class="border rounded-lg w-full py-2 px-3" placeholder="Enter your username" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-gray-700 font-medium">Password</label>
+                    <input type="password" id="password" class="border rounded-lg w-full py-2 px-3" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 w-full">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Employee List Page (Hidden by default) -->
+    <div id="employeeListPage" class="hidden p-6">
+        <div class="max-w-6xl mx-auto">
+            <h1 class="text-3xl font-bold text-center mb-6">Employee List</h1>
+            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <thead>
+                    <tr class="bg-gray-800 text-white text-left">
+                        <th class="py-3 px-4">Name</th>
+                        <th class="py-3 px-4">Job Title</th>
+                        <th class="py-3 px-4">Department</th>
+                        <th class="py-3 px-4">Email</th>
+                        <th class="py-3 px-4">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody" class="text-gray-700 opacity-0 transition-opacity duration-700">
+                    <!-- Example rows -->
+                    <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200">
+                        <td class="py-3 px-4">James Avila</td>
+                        <td class="py-3 px-4">Software Engineer</td>
+                        <td class="py-3 px-4">IT</td>
+                        <td class="py-3 px-4">jamesavila@gmail.com</td>
+                        <td class="py-3 px-4">
+                            <button onclick="showModal('James Avila', 'Software Engineer', 'IT', 'jamesavila@gmail.com', 'Bauang, La Union', '09081177469')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transform hover:scale-105 transition-transform duration-200">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200">
+                        <td class="py-3 px-4">Sea Chua</td>
+                        <td class="py-3 px-4">HR Manager</td>
+                        <td class="py-3 px-4">HR</td>
+                        <td class="py-3 px-4">sea.chua@gmail.com</td>
+                        <td class="py-3 px-4">
+                            <button onclick="showModal('Sea Chua', 'HR Manager', 'HR', 'sea.chua@gmail.com', 'Baguio City, Benguet', '09273866918')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transform hover:scale-105 transition-transform duration-200">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200">
+                        <td class="py-3 px-4">Alfie Gumabay</td>
+                        <td class="py-3 px-4">Web Developer</td>
+                        <td class="py-3 px-4">IT</td>
+                        <td class="py-3 px-4">alfie.gumabay@gmail.com</td>
+                        <td class="py-3 px-4">
+                            <button onclick="showModal('Alfie Gumabay', 'Web Developer', 'IT', 'alfie.gumabay@gmail.com', 'Tuguegarao, Cagayan Valley', '09674267112')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transform hover:scale-105 transition-transform duration-200">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200">
+                        <td class="py-3 px-4">Jesslee Diassan</td>
+                        <td class="py-3 px-4">Web Developer</td>
+                        <td class="py-3 px-4">IT</td>
+                        <td class="py-3 px-4">jess.diassan@gmail.com</td>
+                        <td class="py-3 px-4">
+                            <button onclick="showModal('Jesslee Diassan', 'Web Developer', 'IT', 'jess.diassan@gmail.com', 'Baguio City, Benguet', '09546892357')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transform hover:scale-105 transition-transform duration-200">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-200">
+                        <td class="py-3 px-4">Rhyzelle Salvador</td>
+                        <td class="py-3 px-4">Web Developer</td>
+                        <td class="py-3 px-4">IT</td>
+                        <td class="py-3 px-4">rhyzelle.salvador@gmail.com</td>
+                        <td class="py-3 px-4">
+                            <button onclick="showModal('Rhyzelle Salvador', 'Web Developer', 'IT', 'rhyzelle.salvador@gmail.com', 'Laoag City, Ilocos Norte', '0981235691')" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transform hover:scale-105 transition-transform duration-200">
+                                View Details
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="employeeModal" class="fixed inset-0 hidden items-center justify-center bg-gray-800 bg-opacity-50">
+        <div class="bg-white rounded-lg p-6 max-w-sm w-full">
+            <h2 class="text-lg font-bold" id="modalName">Employee Information</h2>
+            <p><strong>Name:</strong> <span id="modalNameContent"></span></p>
+            <p><strong>Job Title:</strong> <span id="modalJobTitle"></span></p>
+            <p><strong>Department:</strong> <span id="modalDepartment"></span></p>
+            <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+            <p><strong>Phone:</strong> <span id="modalPhone"></span></p>
+            <p><strong>Address:</strong> <span id="modalAddress"></span></p>
+            <button onclick="closeModal()" class="block mt-4 bg-red-500 text-white text-center px-4 py-2 rounded hover:bg-red-600">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Redirect from login to employee list
+        function loginRedirect(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === "" || password === "") {
+                alert("Please fill out all fields.");
+                return false;
+            }
+
+            // Hide login page and show employee list page
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('employeeListPage').classList.remove('hidden');
+
+            return false;
+        }
+
+        
+        function showModal(name, jobTitle, department, email, address, phone) {
+            document.getElementById('modalNameContent').textContent = name;
+            document.getElementById('modalJobTitle').textContent = jobTitle;
+            document.getElementById('modalDepartment').textContent = department;
+            document.getElementById('modalEmail').textContent = email;
+            document.getElementById('modalAddress').textContent = address;
+            document.getElementById('modalPhone').textContent = phone;
+            document.getElementById('employeeModal').classList.add('active');
+        }
+
+
+        function closeModal() {
+            document.getElementById('employeeModal').classList.remove('active');
+        }
+
+        window.onload = function() {
+            document.getElementById('employeeTableBody').classList.add('opacity-100');
+        }
+    </script>
+</body>
+</html>
